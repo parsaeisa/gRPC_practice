@@ -1,0 +1,25 @@
+service RouteGuide {
+    rpc GetFeature(Point) returns (Feature){}
+    rpc ListeFeatures(Rectangle) returns (stream Feature){}
+    rpc RecordRoute(stream Point) returns (RouteSummary) {}    
+}
+
+message Point {
+  required int32 latitude = 1;
+  required int32 longitude = 2;
+}
+
+message Rectangle {
+  required int32 Startlatitude = 1;
+  required int32 Startlongitude = 2;
+  required int32 Endlatitude = 3;
+  required int32 Endlongitude = 4;
+}
+
+message Feature {
+  required int32 TrafficIntensity = 1 ;
+}
+
+message RouteSummary {
+  required int32 length = 1 ;
+}
