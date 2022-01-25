@@ -1,0 +1,29 @@
+syntax = "proto3";
+option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
+
+package routeguide;
+service RouteGuide {
+    rpc GetFeature(Point) returns (Feature){}
+    rpc ListeFeatures(Rectangle) returns (stream Feature){}
+    rpc RecordRoute(stream Point) returns (RouteSummary) {}    
+}
+
+message Point {
+  int32 latitude = 1;
+  int32 longitude = 2;
+}
+
+message Rectangle {
+  int32 Startlatitude = 1;
+  int32 Startlongitude = 2;
+  int32 Endlatitude = 3;
+  int32 Endlongitude = 4;
+}
+
+message Feature {
+  int32 TrafficIntensity = 1 ;
+}
+
+message RouteSummary {
+  int32 length = 1 ;
+}
