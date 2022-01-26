@@ -20,8 +20,8 @@ func main () {
 	if err != nil {
 		log.Fatalf("did not connect %" , err)
 	}
-
 	defer conn.Close()
+	
 	client := pb.NewGreeterClient(conn)
 
 	ctx , cancel := context.WithTimeout(context.Background() , time.Second)
