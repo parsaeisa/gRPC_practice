@@ -55,9 +55,36 @@ protoc --go_out=. --go_opt=paths=source_relative \
 ```
 ### Implement Server 
 At first you should define a server struct which has a UnimplementedServer from generated files .
+```go
+type Server struct {
+    pb.UnimplementedGreeterServer
+}
+```
 Then you start the server listening. 
-for each of services that you define in your .proto files you should define methods and assign them to Server struct . 
+```go 
+func main () {
+	lis , err := net.Listen("tcp" , ":50051")
+	if err != nil {
+		log.Fatalf("failed to listen %v" , err)
+	}
 
+	s := grpc.NewServer()
+	// registering out server as a grpc server 
+	pb.RegisterGreeterServer(s , &Server{})
+	log.Printf("server listening at 50051")
+
+	if err := s.Serve(lis) ; err != nil {
+		log.Fatal("failed serving . ")
+	}
+}
+
+```
+
+for each of services that you define in your .proto files you should define methods and assign them to Server struct . 
+```go 
+
+func (s *Server) SayHello (ctx context.Context, helloRequest *pb.HelloRequest) (*pb.HelloReply, error) {}
+```
 
 ### Implement Client 
 Implementing client is easy . you just define one method to make connection to server , then all you have to do is calling methods that you defined for the server . 
@@ -112,11 +139,11 @@ In Client , after connecting to server and define a stream in the way below :
     
     // make client
     client := pb.NewGrpcClient(conn)    
-		ctx := context.Background()    
-		stream, err := client.NatsSubscribe(ctx)
-		if err != nil {
-			log.WithError(err).Fatal("error in sending request")
-		}
+    ctx := context.Background()    
+    stream, err := client.NatsSubscribe(ctx)
+    if err != nil {
+        log.WithError(err).Fatal("error in sending request")
+    }
 ```
 We have two go-routins wich operate :
 + sending requests to server

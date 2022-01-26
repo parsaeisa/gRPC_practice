@@ -13,9 +13,10 @@ type Server struct {
 	pb.UnimplementedGreeterServer
 }
 
-func (s *Server) SayHello (ctx context.Context, helloRequest *HelloRequest) (*HelloReply, error) {
-	return &HelloReply{
-		Message : "Hello" ,
+func (s *Server) SayHello (ctx context.Context, helloRequest *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Print(helloRequest.Name)
+	return &pb.HelloReply{
+		Message : "Hi I am server ." ,
 	} , nil
 }
 
