@@ -7,6 +7,10 @@
 through [here](https://grpc.io/docs/languages/go/quickstart/) you can see GRPC document for golang and other languages .
 before getting started make sure you have installed protobuf-compiler . 
 
+```shell script 
+go get google.golang.org/grpc@v1.38.0
+```
+make sure that this is 1.38.0 not 1.38 :) 
 
 - Add Protoc to your PATH 
 ```shell script
@@ -57,6 +61,33 @@ for each of services that you define in your .proto files you should define meth
 
 ### Implement Client 
 Implementing client is easy . you just define one method to make connection to server , then all you have to do is calling methods that you defined for the server . 
+#### We have three steps to make a connection from client 
+- Dial the server 
+```go
+	conn , err := grpc.Dial(address , grpc.WithInsecure() , grpc.WithBlock())
+	if err != nil {
+		log.Fatalf("did not connect %" , err)
+	}
+	defer conn.Close()
+```
+- Make a new client 
+```go
+	client := pb.NewGreeterClient(conn)
+```
+
+- Define a context to make connections
+```go
+	ctx , cancel := context.WithTimeout(context.Background() , time.Second)
+	defer cancel ()
+```
+
+Now you can call server functions from client , like the example code below :
+```go
+	HelloReply , err := client.SayHello(ctx , &pb.HelloRequest{Name : "Hello , I'm client "})
+	if err != nil {
+		log.Fatalf("error while greeting %v" , err)
+	}
+```
 
 ## Streaming with gRPC
 In the previous section , we call one of the server functions and server responds to us immediately . 
