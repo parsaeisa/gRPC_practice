@@ -1,6 +1,18 @@
 # gRPC_practice
 
 ## Why GRPC ? 
+### gRPC benefits :
++ Lightweight messages
++ High performance 
++ Built-in code generation
++ More connection options like data streaming 
++ More efficient parsing with Protocol Buffers 
++ Schema is essential 
+
+
+You can read more about gRPC in the links below :
++ https://www.altexsoft.com/blog/what-is-grpc/
++ https://medium.com/@sankar.p/how-grpc-convinced-me-to-chose-it-over-rest-30408bf42794
 
 ## getting started with grpc :
 ### Install dependencies 
