@@ -1,6 +1,12 @@
 # gRPC_practice
 
 ## Why GRPC ? 
+
+most of the times gRPC is compared with REST , you can see some disadvantages of REST :
++ Sreaming is difficult 
++ Duplex streaming is not possible 
++ Hard to get multiple resources in single request . 
+
 ### gRPC benefits :
 + Lightweight messages
 + High performance 
